@@ -8,6 +8,39 @@
 
 import UIKit
 
+
+struct dataModel {
+    // http://www.weather-forecast.com/locations/Raleigh/forecasts/latest
+    
+    let weatherURLStrLead = "https.weather-forecast.com/locations"
+    let weatherURLStrTrailer = "/forecasts/latest"
+    var location = "Raleigh"
+    var completeURL: URL!
+    init(_ forLocation: String) {
+    
+        completeURL = URL(string: weatherURLStrLead + forLocation + weatherURLStrTrailer)
+    }
+    
+    func getData() {
+        if completeURL != nil {
+            
+            let task = URLSession.shared.dataTask(with: completeURL!) {
+                data, response, error in
+                guard error == nil else {
+                    print(error!)
+                    return
+                }
+            guard data != nil else {
+                print("Data is empty")
+                return
+            }
+        }
+        task.resume()
+            
+        }
+    }
+    
+}
 class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var cityTextField: UITextField!
